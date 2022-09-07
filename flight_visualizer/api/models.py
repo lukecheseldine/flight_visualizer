@@ -14,7 +14,9 @@ API = "https://opensky-network.org/api/states/all"
 result = requests.get(API)
 data = result.json()
 ftime = data.get("time")
-callsign = data.get("states")[0][1]
-print(ftime, callsign)
-flight = flightData.objects.create(time = ftime, callsign = callsign)
-flight.save()
+states = data.get("states")
+print(len(states))
+for i, flight in enumerate(states):
+    flightdata = flightData.objects.create(time = ftime, callsign = flight[1])
+    print(flightdata)
+    flightdata.save()
